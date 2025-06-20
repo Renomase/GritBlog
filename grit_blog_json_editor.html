@@ -1,0 +1,95 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GRIT Blog JSON Editor</title>
+  <style>
+    body {
+      font-family: Verdana, Raleway, sans-serif;
+      background: #0e0e0e;
+      color: #fff;
+      padding: 30px;
+    }
+    h1 {
+      color: #C41E3A;
+    }
+    textarea {
+      width: 100%;
+      height: 400px;
+      background: #1a1a1a;
+      color: #eee;
+      border: 1px solid #444;
+      padding: 10px;
+      font-family: monospace;
+      font-size: 14px;
+      resize: vertical;
+    }
+    button {
+      background: #C41E3A;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      margin-top: 15px;
+      cursor: pointer;
+    }
+    .output {
+      margin-top: 20px;
+      background: #222;
+      padding: 15px;
+      border: 1px solid #333;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>📝 GRIT Blog JSON Editor</h1>
+  <p>Edit your blog posts in JSON format below. Click "Validate & Preview" to test changes.</p>
+
+  <textarea id="jsonInput">[
+  {
+    "title": "🧠 Claim Your PoSg",
+    "text": "Track your XP and unlock GRIT rewards using our native claim portal.",
+    "link": "https://tracker.solgrit.online"
+  },
+  {
+    "title": "🚀 Launch Your Swap",
+    "text": "Deploy a mobile-first GRIT swap interface using Jupiter backend.",
+    "link": "https://swap.solgrit.online"
+  },
+  {
+    "title": "🎨 Create NFT Badges",
+    "text": "Mint PoSg NFT badges with Metaplex + IPFS. Launch your own mini-movement.",
+    "link": "#"
+  }
+]</textarea>
+
+  <button onclick="validateJSON()">✅ Validate & Preview</button>
+
+  <div class="output" id="outputBox">
+    <h3>Live Preview:</h3>
+    <ul id="previewList"></ul>
+  </div>
+
+  <script>
+    function validateJSON() {
+      const input = document.getElementById('jsonInput').value;
+      const outputBox = document.getElementById('outputBox');
+      const previewList = document.getElementById('previewList');
+      previewList.innerHTML = '';
+      try {
+        const data = JSON.parse(input);
+        data.forEach(post => {
+          const li = document.createElement('li');
+          li.innerHTML = `<strong>${post.title}</strong><br>${post.text}<br><a href="${post.link}" style="color:#C41E3A;">${post.link}</a>`;
+          previewList.appendChild(li);
+        });
+        outputBox.style.display = 'block';
+      } catch (e) {
+        alert('❌ Invalid JSON: ' + e.message);
+      }
+    }
+  </script>
+</body>
+</html>
